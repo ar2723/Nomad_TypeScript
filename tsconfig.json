@@ -1,0 +1,9 @@
+{
+    "include": [
+        "src", "nomad_basics"
+    ],
+    "compilerOptions": {
+        "outDir": "build",
+        "target": "ES6"
+    }
+}
