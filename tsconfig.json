@@ -3,7 +3,12 @@
         "src", "nomad_basics"
     ],
     "compilerOptions": {
+        // 컴파일된 JS파일이 어느 파일로 들어갈지를 명시
         "outDir": "build",
-        "target": "ES6"
+        // 작성한 TS에 대해 어떤 JS버전으로 컴파일될지를 명시
+        "target": "ES6",
+        // DOM -> 브라우저 환경에서 실행될 것이라 명시, 
+        // 명시되는 순간 document API에 대해서 자동으로 명시(함수 자동 완성)해줌
+        "lib": ["ES6", "DOM"]
     }
 }
