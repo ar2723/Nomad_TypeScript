@@ -11,18 +11,20 @@
 // abstract Class 추상 클래스
 // abstract Class : 다른 클래스가 상송받을 수 있는 class
 // abstract 를 사용하면 상속받을 class에 'extends' 를 꼭 추가해주기!
-// abstract class User{
-//     constructor(
-//         private firstName:string,
-//         private lastName:string,
-//         public nickname:string
-//     ) {}
-// }
+abstract class User{
+    constructor(
+        public firstName:string,
+        public lastName:string,
+        public nickname:string
+    ) {}
+}
     
-//     class Player extends User{ }
+    class Player3 extends User { 
+
+    }
     
-//     // new User는 사용할 수 없다 -> 상속만 가능
-//     const seung = new Player("kim","seung","승현2");
+    // new User는 사용할 수 없다 -> 상속만 가능
+    const seung = new Player3("kim","seung","승현2");
     
     // private한 것들은 대입이 되지 않는다. public 만 가능!
     // seung.firstName = "lee";

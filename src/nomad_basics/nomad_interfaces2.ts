@@ -1,8 +1,8 @@
-interface User {
+interface User2 {
     firstName : string,
     lastName : string,
     sayHi(name : string) : string,
-    fullName() : string
+    fullName() : string,
 }
 
 interface Human {
@@ -12,7 +12,7 @@ interface Human {
 // 인터페이스를 구현할 때는 접근제어자 private와 protected를 사용하지 못한다.
 // 추상클래스와 다르게 인터페이스에서는 선언부를 따로 지정할 수 없다.
 // 인터페이스는 JS로 컴파일되지 않는다.
-class Player implements User, Human {
+class Player implements User2, Human {
     constructor (
         public firstName : string, 
         public lastName : string,
@@ -27,7 +27,7 @@ class Player implements User, Human {
         return `Hello ${name}. My name is ${this.fullName()}`
     }
 
-    userFn(arg : User) {
+    userFn(arg : User2) {
         console.log(arg.fullName());
     }
 }
