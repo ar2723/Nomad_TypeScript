@@ -1,48 +1,61 @@
 type GeolocationFn = {
-    (successFn: Function, errorFn? : Function, optionObj? : object) : void
-    (success : boolean, error? : boolean, options? : unknown) : void
-}
+    (successFn: (pos: GeolocationPosition) => void): void;
+    (successFn: (pos: GeolocationPosition) => void, errorFn: (err: string) => void): void;
+    (successFn: (pos: GeolocationPosition) => void, errorFn: (err: string) => void, optionObj: object): void;
+};
 
 interface GeolocationAPI {
     position : GeolocationPosition;
-    successFn(pos : GeolocationPosition) : void;
-    getCurrentPosition: GeolocationFn;
-    watchPosition : GeolocationFn;
+    getCurrentPosition : GeolocationFn
+    watchPosition : GeolocationFn
     clearWatch(id : number) : void;
 }
 
 class geolocation implements GeolocationAPI {
 
-    position = new GeolocationPosition();
+    position = new GeolocationPosition(); 
+    
+    getCurrentPosition (
+        successFn: (pos: GeolocationPosition) => void,
+        errorFn?: (err: string) => void,
+        optionObj?: object
+    ) {
+        try {
+            successFn(this.position);
+        } catch (error) {
+            if (errorFn) errorFn(error);
 
-    public successFn(pos : GeolocationPosition) {
-        console.log(`위도 : ${pos.coords.latitude} | 경도 : ${pos.coords.longitude}`);
-    }
-
-    public getCurrentPosition : GeolocationFn = (successFn, errorFn, optionObj) => {
-        if(typeof successFn === 'function') {
-            this.position.coords.latitude
-            console.log(this.position['longitude']);
-        }
-        if(typeof errorFn === 'function') {
-            console.log("현재 위치 정보를 불러올 수 없습니다")
-        }
-        if(typeof optionObj === 'object') {
+        } finally {
+            if(optionObj) {
             
+            }
         }
     }
 
-    public watchPosition : GeolocationFn = (success, error, options) => {
-        if(typeof success === 'boolean') {
-            console.log(this.position['latitude']);
-            console.log(this.position['longitude']);
-        }
-        if(typeof error === 'boolean') {
+    watchPosition (
+        success: (pos: GeolocationPosition) => void,
+        error?: (err: string) => void,
+        option?: object
+    ) {
+        try {
+            success(this.position);
+        } catch (err) {
+            if (error) error(err);
             
+        } finally {
+            if(option) {}
         }
     }
 
-    public clearWatch(id) {
+    clearWatch(id : number) {
 
     }
+}
+
+const successFn = (pos: GeolocationPosition) => {
+    console.log(`위도: ${pos.coords.latitude} | 경도: ${pos.coords.longitude}`);
+}
+
+const errorFn = (err) => {
+    console.log("에러 : " + err);
 }
