@@ -1,47 +1,72 @@
-type storageItem <T> = {
+type storageItem<T> = {
     [keys : string] : T
 }
 
-abstract class LocalStorageAPI <T> {
-    constructor(
-        protected item : storageItem<T>
-    ) {}
+interface LocalStorageAPI <T> {
+    item : storageItem<T>
+    setItem(key : string, value : T) : void
+    getItem(key : string) : T
+    clearItem(key : string) : void
+    clear() : void
+}
+
+abstract class LocalStorage2<T> implements LocalStorageAPI<T> {
+    item : storageItem<T> = {};
     abstract setItem(key : string, value : T) : void
     abstract getItem(key : string) : T
     abstract clearItem(key : string) : void
     abstract clear() : void
 }
 
-class localStorageAPI <T> extends LocalStorageAPI <T>  {
+class localStorageAPI <T> extends LocalStorage2 <T>  {
     setItem(key : string, value : T) {
-        super.item[key] = value;
+        this.item[key] = value;
     }
     getItem(key : string) {
-        return super.item[key];
+        return this.item[key];
     }
     clearItem(key : string) {
-        delete super.item[key];
+        delete this.item[key];
     }
     clear() {
-        super.item = {};
+        this.item = {};
     }
 }
 
-type GeolocationAPI = {
-    (successFn: () => {}, errorFn? : () => {}, optionObj? : object): number,
-    (success : boolean, error? : boolean, options? : unknown) : number
+
+type Position = {
+    [keys in 'latitude' | 'longitude']: number
+}
+type GeolocationFn = {
+    (successFn: () => {}, errorFn? : () => {}, optionObj? : object) : void
+    (success : boolean, error? : boolean, options? : unknown) : void
 }
 
-class geolocation {
-    private position : number = 0;
+interface GeolocationAPI {
+    position : Position;
+    getCurrentPosition: GeolocationFn;
+    watchPosition : GeolocationFn;
+    clearWatch(id : number) : void;
+}
 
-    public getCurrentPosition : GeolocationAPI = (successFn, errorFn, optionObj) => {
+class geolocation implements GeolocationAPI {
+    position = {'latitude' : 0, 'longitude' : 0} ;
+
+    public getCurrentPosition : GeolocationFn = (successFn, errorFn, optionObj) => {
         if(typeof successFn === 'function') {
-            return this.position;
+            console.log(this.position['latitude']);
+            console.log(this.position['longitude']);
         }
-        else {
-            return this.position;
+    }
+
+    public watchPosition : GeolocationFn = (success, error, options) => {
+        if(typeof success === 'boolean') {
+            console.log(this.position['latitude']);
+            console.log(this.position['longitude']);
         }
+    }
+
+    public clearWatch(id) {
         
     }
 }
