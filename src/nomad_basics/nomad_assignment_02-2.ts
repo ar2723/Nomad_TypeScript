@@ -1,10 +1,11 @@
 type GeolocationFn = {
-    (successFn: () => {}, errorFn? : () => {}, optionObj? : object) : void
+    (successFn: Function, errorFn? : Function, optionObj? : object) : void
     (success : boolean, error? : boolean, options? : unknown) : void
 }
 
 interface GeolocationAPI {
     position : GeolocationPosition;
+    successFn(pos : GeolocationPosition) : void;
     getCurrentPosition: GeolocationFn;
     watchPosition : GeolocationFn;
     clearWatch(id : number) : void;
@@ -13,6 +14,10 @@ interface GeolocationAPI {
 class geolocation implements GeolocationAPI {
 
     position = new GeolocationPosition();
+
+    public successFn(pos : GeolocationPosition) {
+        console.log(`위도 : ${pos.coords.latitude} | 경도 : ${pos.coords.longitude}`);
+    }
 
     public getCurrentPosition : GeolocationFn = (successFn, errorFn, optionObj) => {
         if(typeof successFn === 'function') {
