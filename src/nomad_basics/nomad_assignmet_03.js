@@ -102,7 +102,6 @@ export function hasPath(object, path, hasFunc) {
  * @param {Array | Object} collection The collection to iterate over.
  * @param {Function} [predicate=_.identity] The function invoked per iteration.
  * @returns {Array} Returns the new filtered array.
- * @see _.reject
  */
 export function filter(collection, predicate) {
     var func = isArray(collection) ? arrayFilter : baseFilter;
