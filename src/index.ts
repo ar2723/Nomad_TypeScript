@@ -1,6 +1,1 @@
-class Block {
-    constructor(private data : string) {}
-    static hello() {
-        return "hi";
-    }
-}
+import { hasIn } from "nomad_assignment_03";
